@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -51,6 +53,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=10)
      */
     private $telephone;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Restaurant::class, mappedBy="fk_user")
+     */
+    private $restaurants;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Livraison::class, mappedBy="fk_user")
+     */
+    private $livraisons;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Livreur::class, mappedBy="fk_user")
+     */
+    private $livreurs;
+
+    public function __construct()
+    {
+        $this->restaurants = new ArrayCollection();
+        $this->livraisons = new ArrayCollection();
+        $this->livreurs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -173,6 +197,96 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setTelephone(string $telephone): self
     {
         $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Restaurant>
+     */
+    public function getRestaurants(): Collection
+    {
+        return $this->restaurants;
+    }
+
+    public function addRestaurant(Restaurant $restaurant): self
+    {
+        if (!$this->restaurants->contains($restaurant)) {
+            $this->restaurants[] = $restaurant;
+            $restaurant->setFkUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRestaurant(Restaurant $restaurant): self
+    {
+        if ($this->restaurants->removeElement($restaurant)) {
+            // set the owning side to null (unless already changed)
+            if ($restaurant->getFkUser() === $this) {
+                $restaurant->setFkUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Livraison>
+     */
+    public function getLivraisons(): Collection
+    {
+        return $this->livraisons;
+    }
+
+    public function addLivraison(Livraison $livraison): self
+    {
+        if (!$this->livraisons->contains($livraison)) {
+            $this->livraisons[] = $livraison;
+            $livraison->setFkUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLivraison(Livraison $livraison): self
+    {
+        if ($this->livraisons->removeElement($livraison)) {
+            // set the owning side to null (unless already changed)
+            if ($livraison->getFkUser() === $this) {
+                $livraison->setFkUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Livreur>
+     */
+    public function getLivreurs(): Collection
+    {
+        return $this->livreurs;
+    }
+
+    public function addLivreur(Livreur $livreur): self
+    {
+        if (!$this->livreurs->contains($livreur)) {
+            $this->livreurs[] = $livreur;
+            $livreur->setFkUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLivreur(Livreur $livreur): self
+    {
+        if ($this->livreurs->removeElement($livreur)) {
+            // set the owning side to null (unless already changed)
+            if ($livreur->getFkUser() === $this) {
+                $livreur->setFkUser(null);
+            }
+        }
 
         return $this;
     }

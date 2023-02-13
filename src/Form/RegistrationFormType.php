@@ -23,11 +23,11 @@ class RegistrationFormType extends AbstractType
             ->add('email')
             ->add('Restaurateur', CheckboxType::class, [
                 'mapped' => false,
-                'required' => 'false',
+                'required'=>false,
             ])
             ->add('Livreur', CheckboxType::class, [
                 'mapped' => false,
-                'required' => 'false',
+                'required'=>false,
             ])
             ->add('AccepteLesTermes', CheckboxType::class, [
                 'mapped' => false,
