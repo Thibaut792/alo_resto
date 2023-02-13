@@ -35,20 +35,15 @@ class Plat
     private $stock;
 
     /**
-     * @ORM\ManyToOne(targetEntity=typeplat::class, inversedBy="plats")
+     * @ORM\ManyToOne(targetEntity=Typeplat::class, inversedBy="plats")
      * @ORM\JoinColumn(nullable=false)
      */
     private $fk_type_plat;
 
     /**
-     * @ORM\OneToMany(targetEntity=Restaurant::class, mappedBy="fk_plat")
+     * @ORM\ManyToOne(targetEntity=Restaurant::class, inversedBy="plats")
      */
-    private $restaurants;
-
-    public function __construct()
-    {
-        $this->restaurants = new ArrayCollection();
-    }
+    private $fk_restaurant;
 
     public function getId(): ?int
     {
@@ -106,29 +101,15 @@ class Plat
     /**
      * @return Collection<int, Restaurant>
      */
-    public function getRestaurants(): Collection
+
+    public function getFkRestaurant(): ?Restaurant
     {
-        return $this->restaurants;
+        return $this->fk_restaurant;
     }
 
-    public function addRestaurant(Restaurant $restaurant): self
+    public function setFkRestaurant(?Restaurant $fk_restaurant): self
     {
-        if (!$this->restaurants->contains($restaurant)) {
-            $this->restaurants[] = $restaurant;
-            $restaurant->setFkPlat($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRestaurant(Restaurant $restaurant): self
-    {
-        if ($this->restaurants->removeElement($restaurant)) {
-            // set the owning side to null (unless already changed)
-            if ($restaurant->getFkPlat() === $this) {
-                $restaurant->setFkPlat(null);
-            }
-        }
+        $this->fk_restaurant = $fk_restaurant;
 
         return $this;
     }

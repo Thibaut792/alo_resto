@@ -33,7 +33,7 @@ class Livraison
     private $fk_restaurant;
 
     /**
-     * @ORM\ManyToOne(targetEntity=suiviedecommande::class, inversedBy="livraisons")
+     * @ORM\ManyToOne(targetEntity=SuivieDeCommande::class, inversedBy="livraisons")
      */
     private $fk_suivi_commande;
 

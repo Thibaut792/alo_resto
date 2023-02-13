@@ -35,11 +35,6 @@ class Restaurant
     private $ville;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Plat::class, inversedBy="restaurants")
-     */
-    private $fk_plat;
-
-    /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="restaurants")
      */
     private $fk_user;
@@ -49,9 +44,15 @@ class Restaurant
      */
     private $livraisons;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Plat::class, mappedBy="fk_restaurant")
+     */
+    private $plats;
+
     public function __construct()
     {
         $this->livraisons = new ArrayCollection();
+        $this->plats = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -95,18 +96,6 @@ class Restaurant
         return $this;
     }
 
-    public function getFkPlat(): ?Plat
-    {
-        return $this->fk_plat;
-    }
-
-    public function setFkPlat(?Plat $fk_plat): self
-    {
-        $this->fk_plat = $fk_plat;
-
-        return $this;
-    }
-
     public function getFkUser(): ?User
     {
         return $this->fk_user;
@@ -143,6 +132,36 @@ class Restaurant
             // set the owning side to null (unless already changed)
             if ($livraison->getFkRestaurant() === $this) {
                 $livraison->setFkRestaurant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Plat>
+     */
+    public function getPlats(): Collection
+    {
+        return $this->plats;
+    }
+
+    public function addPlat(Plat $plat): self
+    {
+        if (!$this->plats->contains($plat)) {
+            $this->plats[] = $plat;
+            $plat->setFkRestaurant($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlat(Plat $plat): self
+    {
+        if ($this->plats->removeElement($plat)) {
+            // set the owning side to null (unless already changed)
+            if ($plat->getFkRestaurant() === $this) {
+                $plat->setFkRestaurant(null);
             }
         }
 

@@ -35,7 +35,7 @@ class Livreur
     private $fk_user;
 
     /**
-     * @ORM\ManyToOne(targetEntity=typevehicule::class, inversedBy="livreurs")
+     * @ORM\ManyToOne(targetEntity=Typevehicule::class, inversedBy="livreurs")
      */
     private $fk_type_vehicule;
 
