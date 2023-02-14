@@ -24,14 +24,10 @@ class Typevehicule
      */
     private $libelle;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Livreur::class, mappedBy="fk_type_vehicule")
-     */
-    private $livreurs;
+
 
     public function __construct()
     {
-        $this->livreurs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -47,36 +43,6 @@ class Typevehicule
     public function setLibelle(string $libelle): self
     {
         $this->libelle = $libelle;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Livreur>
-     */
-    public function getLivreurs(): Collection
-    {
-        return $this->livreurs;
-    }
-
-    public function addLivreur(Livreur $livreur): self
-    {
-        if (!$this->livreurs->contains($livreur)) {
-            $this->livreurs[] = $livreur;
-            $livreur->setFkTypeVehicule($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLivreur(Livreur $livreur): self
-    {
-        if ($this->livreurs->removeElement($livreur)) {
-            // set the owning side to null (unless already changed)
-            if ($livreur->getFkTypeVehicule() === $this) {
-                $livreur->setFkTypeVehicule(null);
-            }
-        }
 
         return $this;
     }

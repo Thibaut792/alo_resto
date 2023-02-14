@@ -35,7 +35,7 @@ class Plat
     private $stock;
 
     /**
-     * @ORM\ManyToOne(targetEntity=typeplat::class, inversedBy="plats")
+     * @ORM\ManyToOne(targetEntity=Typeplat::class, inversedBy="plats")
      * @ORM\JoinColumn(nullable=false)
      */
     private $fk_type_plat;

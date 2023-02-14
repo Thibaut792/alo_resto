@@ -28,19 +28,15 @@ class Livraison
     private $secteur;
 
     /**
-     * @ORM\ManyToOne(targetEntity=restaurant::class, inversedBy="livraisons")
+     * @ORM\ManyToOne(targetEntity=Restaurant::class, inversedBy="livraisons")
      */
     private $fk_restaurant;
 
     /**
-     * @ORM\ManyToOne(targetEntity=suiviedecommande::class, inversedBy="livraisons")
+     * @ORM\ManyToOne(targetEntity=SuivieDeCommande::class, inversedBy="livraisons")
      */
     private $fk_suivi_commande;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Livreur::class, inversedBy="livraisons")
-     */
-    private $fk_livreur;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="livraisons")
@@ -76,12 +72,12 @@ class Livraison
         return $this;
     }
 
-    public function getFkRestaurant(): ?restaurant
+    public function getFkRestaurant(): ?Restaurant
     {
         return $this->fk_restaurant;
     }
 
-    public function setFkRestaurant(?restaurant $fk_restaurant): self
+    public function setFkRestaurant(?Restaurant $fk_restaurant): self
     {
         $this->fk_restaurant = $fk_restaurant;
 
@@ -100,17 +96,6 @@ class Livraison
         return $this;
     }
 
-    public function getFkLivreur(): ?Livreur
-    {
-        return $this->fk_livreur;
-    }
-
-    public function setFkLivreur(?Livreur $fk_livreur): self
-    {
-        $this->fk_livreur = $fk_livreur;
-
-        return $this;
-    }
 
     public function getFkUser(): ?User
     {
