@@ -24,10 +24,16 @@ class Typevehicule
      */
     private $libelle;
 
+    /**
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="fk_type_vehicule")
+     */
+    private $users;
+
 
 
     public function __construct()
     {
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -43,6 +49,36 @@ class Typevehicule
     public function setLibelle(string $libelle): self
     {
         $this->libelle = $libelle;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->setFkTypeVehicule($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getFkTypeVehicule() === $this) {
+                $user->setFkTypeVehicule(null);
+            }
+        }
 
         return $this;
     }
