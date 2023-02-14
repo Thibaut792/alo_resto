@@ -64,6 +64,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $livraisons;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Typevehicule::class, inversedBy="users")
+     */
+    private $fk_type_vehicule;
+
 
     public function __construct()
     {
@@ -252,6 +257,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $livraison->setFkUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFkTypeVehicule(): ?Typevehicule
+    {
+        return $this->fk_type_vehicule;
+    }
+
+    public function setFkTypeVehicule(?Typevehicule $fk_type_vehicule): self
+    {
+        $this->fk_type_vehicule = $fk_type_vehicule;
 
         return $this;
     }

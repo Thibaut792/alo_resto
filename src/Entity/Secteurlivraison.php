@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\TypevehiculeRepository;
+use App\Repository\SecteurlivraisonRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=TypevehiculeRepository::class)
+ * @ORM\Entity(repositoryClass=SecteurlivraisonRepository::class)
  */
-class Typevehicule
+class Secteurlivraison
 {
     /**
      * @ORM\Id
@@ -25,15 +25,13 @@ class Typevehicule
     private $libelle;
 
     /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="fk_type_vehicule")
+     * @ORM\OneToMany(targetEntity=Restaurant::class, mappedBy="fk_secteur_livraison")
      */
-    private $users;
-
-
+    private $restaurants;
 
     public function __construct()
     {
-        $this->users = new ArrayCollection();
+        $this->restaurants = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -54,29 +52,29 @@ class Typevehicule
     }
 
     /**
-     * @return Collection<int, User>
+     * @return Collection<int, Restaurant>
      */
-    public function getUsers(): Collection
+    public function getRestaurants(): Collection
     {
-        return $this->users;
+        return $this->restaurants;
     }
 
-    public function addUser(User $user): self
+    public function addRestaurant(Restaurant $restaurant): self
     {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->setFkTypeVehicule($this);
+        if (!$this->restaurants->contains($restaurant)) {
+            $this->restaurants[] = $restaurant;
+            $restaurant->setFkSecteurLivraison($this);
         }
 
         return $this;
     }
 
-    public function removeUser(User $user): self
+    public function removeRestaurant(Restaurant $restaurant): self
     {
-        if ($this->users->removeElement($user)) {
+        if ($this->restaurants->removeElement($restaurant)) {
             // set the owning side to null (unless already changed)
-            if ($user->getFkTypeVehicule() === $this) {
-                $user->setFkTypeVehicule(null);
+            if ($restaurant->getFkSecteurLivraison() === $this) {
+                $restaurant->setFkSecteurLivraison(null);
             }
         }
 

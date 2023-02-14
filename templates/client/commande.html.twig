@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Choix des plats!{% endblock %}
+
+{% block body %}
+ <h1>Les commandes en cours</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>date</th>
+                <th>secteur</th>
+                
+            </tr>
+            
+        </thead>
+        <tbody>
+        {% for commande in commandes %}
+            <tr>
+                <td>{{ commande.id }}</td>
+                <td>{{ commande.date | date('d/m/y h:m:s')}}</td>
+                <td>{{ commande.secteur }}</td> 
+            </tr>
+        {% endfor %}
+        <tr>
+            <th>restaurant</th>
+        </tr>
+        {% for restaurant in restaurants %}
+            <tr>
+                <td>{{ restaurant.nom }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {#<a href="{{ path('app_type_consultation_new') }}">Create new</a>#}
+    {# <a href="{{ path('type_consultationTyper')}}"> Prendre Rendez-vous</a> #}
+{% endblock %}
