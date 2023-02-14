@@ -43,6 +43,12 @@ class Livraison
      */
     private $fk_user;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $quantite;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +111,18 @@ class Livraison
     public function setFkUser(?User $fk_user): self
     {
         $this->fk_user = $fk_user;
+
+        return $this;
+    }
+
+    public function getQuantite(): ?int
+    {
+        return $this->quantite;
+    }
+
+    public function setQuantite(int $quantite): self
+    {
+        $this->quantite = $quantite;
 
         return $this;
     }

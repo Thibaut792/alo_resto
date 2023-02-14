@@ -26,7 +26,7 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(
-            $userPasswordHasher->hashPassword(
+                $userPasswordHasher->hashPassword(
                     $user,
                     $form->get('plainPassword')->getData()
                 )
@@ -39,13 +39,13 @@ class RegistrationController extends AbstractController
             if ($form->get('Restaurateur')->getData()) {
                 $user->setRoles(['ROLE_Restaurateur']);
             }
-            
+
 
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('_preview_error');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('registration/register.html.twig', [

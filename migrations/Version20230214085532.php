@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230214080450 extends AbstractMigration
+final class Version20230214085532 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,7 +20,7 @@ final class Version20230214080450 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE livraison (id INT AUTO_INCREMENT NOT NULL, fk_restaurant_id INT DEFAULT NULL, fk_suivi_commande_id INT DEFAULT NULL, fk_user_id INT DEFAULT NULL, date DATETIME NOT NULL, secteur VARCHAR(255) NOT NULL, INDEX IDX_A60C9F1FD5AD05AC (fk_restaurant_id), INDEX IDX_A60C9F1F9DCCA4B1 (fk_suivi_commande_id), INDEX IDX_A60C9F1F5741EEB9 (fk_user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE livraison (id INT AUTO_INCREMENT NOT NULL, fk_restaurant_id INT DEFAULT NULL, fk_suivi_commande_id INT DEFAULT NULL, fk_user_id INT DEFAULT NULL, date DATETIME NOT NULL, secteur VARCHAR(255) NOT NULL, quantite INT NOT NULL, INDEX IDX_A60C9F1FD5AD05AC (fk_restaurant_id), INDEX IDX_A60C9F1F9DCCA4B1 (fk_suivi_commande_id), INDEX IDX_A60C9F1F5741EEB9 (fk_user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE plat (id INT AUTO_INCREMENT NOT NULL, fk_type_plat_id INT NOT NULL, nom VARCHAR(255) NOT NULL, tarif DOUBLE PRECISION NOT NULL, stock INT DEFAULT NULL, INDEX IDX_2038A207DEC1D88C (fk_type_plat_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE restaurant (id INT AUTO_INCREMENT NOT NULL, fk_plat_id INT DEFAULT NULL, fk_user_id INT DEFAULT NULL, nom VARCHAR(255) NOT NULL, adresse VARCHAR(255) NOT NULL, ville VARCHAR(255) NOT NULL, INDEX IDX_EB95123F2712884C (fk_plat_id), INDEX IDX_EB95123F5741EEB9 (fk_user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE suivie_de_commande (id INT AUTO_INCREMENT NOT NULL, libelle VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
