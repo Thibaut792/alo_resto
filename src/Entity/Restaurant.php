@@ -49,6 +49,11 @@ class Restaurant
      */
     private $plats;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Secteurlivraison::class, inversedBy="restaurants")
+     */
+    private $fk_secteurlivraison;
+
     public function __construct()
     {
         $this->livraisons = new ArrayCollection();
@@ -164,6 +169,18 @@ class Restaurant
                 $plat->setFkRestaurant(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFkSecteurlivraison(): ?Secteurlivraison
+    {
+        return $this->fk_secteurlivraison;
+    }
+
+    public function setFkSecteurlivraison(?Secteurlivraison $fk_secteurlivraison): self
+    {
+        $this->fk_secteurlivraison = $fk_secteurlivraison;
 
         return $this;
     }

@@ -65,15 +65,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $livraisons;
 
     /**
-     * @ORM\OneToMany(targetEntity=Livreur::class, mappedBy="fk_user")
+     * @ORM\ManyToOne(targetEntity=Typevehicule::class, inversedBy="users")
      */
-    private $livreurs;
+    private $fk_typevehicule;
+
 
     public function __construct()
     {
         $this->restaurants = new ArrayCollection();
         $this->livraisons = new ArrayCollection();
-        $this->livreurs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -261,32 +261,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Livreur>
-     */
-    public function getLivreurs(): Collection
+    public function getFkTypevehicule(): ?Typevehicule
     {
-        return $this->livreurs;
+        return $this->fk_typevehicule;
     }
 
-    public function addLivreur(Livreur $livreur): self
+    public function setFkTypevehicule(?Typevehicule $fk_typevehicule): self
     {
-        if (!$this->livreurs->contains($livreur)) {
-            $this->livreurs[] = $livreur;
-            $livreur->setFkUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLivreur(Livreur $livreur): self
-    {
-        if ($this->livreurs->removeElement($livreur)) {
-            // set the owning side to null (unless already changed)
-            if ($livreur->getFkUser() === $this) {
-                $livreur->setFkUser(null);
-            }
-        }
+        $this->fk_typevehicule = $fk_typevehicule;
 
         return $this;
     }

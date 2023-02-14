@@ -38,11 +38,6 @@ class Livraison
     private $fk_suivi_commande;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Livreur::class, inversedBy="livraisons")
-     */
-    private $fk_livreur;
-
-    /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="livraisons")
      */
     private $fk_user;
@@ -100,17 +95,6 @@ class Livraison
         return $this;
     }
 
-    public function getFkLivreur(): ?Livreur
-    {
-        return $this->fk_livreur;
-    }
-
-    public function setFkLivreur(?Livreur $fk_livreur): self
-    {
-        $this->fk_livreur = $fk_livreur;
-
-        return $this;
-    }
 
     public function getFkUser(): ?User
     {
