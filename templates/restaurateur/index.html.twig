@@ -11,12 +11,35 @@
 <div class="example-wrapper">
     <h1>Vous Etes sur l'interface Restaurateur !</h1>
 <ul>
-    {% for restaurateur in restaurateurs %}
-        <li>
-            {{restaurateur.id}} - {{restaurateur.nom}} - {{restaurateur.adresse}} - {{restaurateur.plats}} - {{restaurateur.user}}
-            - <a href ="{{ path ('app_restaurateur_view', {'id' : restaurateur.plats}) }}" > afficher tout les plats </a> 
-        </li>
-    {% endfor %}
-    </ul>
 </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>nom du restaurant</th>
+                <th>adresse du restaurant</th>
+                <th>type du restaurant</th>
+                <th>nom du restauranteurs</th>
+            </tr>
+        </thead>
+        <tbody>
+   {% for restaurateur in restaurateurs %}
+
+        <td>{{restaurateur.nom}}</td>
+        <td>{{restaurateur.adresse}}</td>
+
+    {% for typeplat in typeplats %}
+        <td>{{typeplat.libelle}}</td>
+    {% for user in users %}
+    <li>
+        <td>{{user.nom}}</td>
+        
+    </li>
+     {% endfor %}
+    {% endfor %}
+    {% endfor %}
+        </tbody>
+    </table>
+
+
+
 {% endblock %}
