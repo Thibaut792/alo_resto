@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Choix des plats!{% endblock %}
+
+{% block body %}
+ <h1>Choix des plats</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>nom</th>
+                <th>tarif</th>
+                <th>stock</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for plat in plats %}
+            <tr>
+                <td>{{ plat.id }}</td>
+                <td>{{ plat.nom }}</td>
+                <td>{{ plat.stock }}</td>
+                <td>{{ plat.tarif }}</td>
+                <td>
+                    <a href="{{ path('app_commande', {'id': plat.id}) }}">Commander</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {#<a href="{{ path('app_type_consultation_new') }}">Create new</a>#}
+    {# <a href="{{ path('type_consultationTyper')}}"> Prendre Rendez-vous</a> #}
+{% endblock %}
