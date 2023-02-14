@@ -9,11 +9,9 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>date</th>
-                <th>secteur</th>
-                
+                <th>Date</th>
+                <th>Secteur</th>
             </tr>
-            
         </thead>
         <tbody>
         {% for commande in commandes %}
@@ -23,9 +21,9 @@
                 <td>{{ commande.secteur }}</td> 
             </tr>
         {% endfor %}
-        <tr>
-            <th>restaurant</th>
-        </tr>
+
+        <th>Restaurant</th>
+        
         {% for restaurant in restaurants %}
             <tr>
                 <td>{{ restaurant.nom }}</td>
