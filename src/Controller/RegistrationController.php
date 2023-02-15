@@ -34,6 +34,7 @@ class RegistrationController extends AbstractController
 
             if ($form->get('Livreur')->getData()) {
                 $user->setRoles(['ROLE_Livreur']);
+                // return $this->redirectToRoute('app_choixVehicule', ['id' => $user->getId()]);
             }
 
             if ($form->get('Restaurateur')->getData()) {
