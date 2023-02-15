@@ -76,6 +76,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->livraisons = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->id . '-' . $this->getNom();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
