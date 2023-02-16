@@ -28,16 +28,15 @@ class RestaurateurController extends AbstractController
      * @Route("/restaurateur", name="app_restaurateur")
      * @IsGranted("ROLE_Restaurateur")
      */
-    public function index(RestaurantRepository $RestaurantRepository, TypeplatRepository $typeplatRepository, UserRepository $userRepository): Response
+    public function index(RestaurantRepository $RestaurantRepository, PlatRepository $PlatRepository, TypeplatRepository $typeplatRepository, UserRepository $userRepository): Response
     {
         $restaurateurs = $RestaurantRepository->findAll();
-        $typeplats = $typeplatRepository->findAll();
-        $users = $userRepository->findAll();
-
+        $user = $userRepository->findAll();
+        $plat = $PlatRepository->findAll();
         return $this->render('restaurateur/index.html.twig', [
             'restaurateurs' => $restaurateurs,
-            'typeplats' => $typeplats,
-            'users' => $users,
+            'users' => $user,
+            'plats' => $plat,
         ]);
     }
 
@@ -45,15 +44,12 @@ class RestaurateurController extends AbstractController
      * @Route("/disponible/{id}", name="app_disponible")
      * @IsGranted("ROLE_Restaurateur")
      */
-    public function disponible(TypeplatRepository $typeplatRepository, PlatRepository $platRepository): Response
+    public function disponible($id, TypeplatRepository $typeplatRepository, RestaurantRepository $restaurantRepository): Response
     {
-        $typeplats = $typeplatRepository->findAll();
-        $plats = $platRepository->findAll();
-
+        $restaurant = $restaurantRepository->find($id);
 
         return $this->render('restaurateur/disponible.html.twig', [
-            'typeplats' => $typeplats,
-            'plats' => $plats,
+            'restaurant' => $restaurant,
         ]);
     }
 

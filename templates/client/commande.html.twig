@@ -21,8 +21,6 @@
                 <td>{{ commande.date | date('d/m/y h:m:s')}}</td>
                 <td>{{ commande.secteur }}</td> 
                 <td>{{ commande.fkrestaurant.nom }}</td>
-                
-                {# <td>{{ commande.plat.nom}}</td> #}
                 <td>
                  {% for plat in commande.platsCommanders %}
                         {{ plat.fkplats.nom }}
