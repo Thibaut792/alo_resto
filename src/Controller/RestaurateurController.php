@@ -19,6 +19,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Livraison;
 use App\Entity\Restaurant;
 use App\Form\LivraisonType;
+use App\Form\NouveauRestaurantType;
 use Symfony\Component\DomCrawler\Form;
 
 class RestaurateurController extends AbstractController
@@ -84,6 +85,31 @@ class RestaurateurController extends AbstractController
             'form' => $form,
             'livraison' => $livraison,
 
+        ]);
+    }
+
+
+    /**
+     * @Route("/ajouterRestaurant/{id}", name="app_addrestaurant")
+     */
+    public function ajouter($id, RestaurantRepository $restaurantRepository, UserRepository $userRepository, ManagerRegistry $doctrine, Request $request): Response
+    {
+        $restaurant = new Restaurant();
+        $user = $userRepository->find($id);
+        $form = $this->createForm(NouveauRestaurantType::class, $restaurant);
+
+        $manager = $doctrine->getManager();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $restaurant = $form->getData();
+            $restaurant->setFkUser($user);
+            $manager->persist($restaurant);
+            $manager->flush();
+            return $this->redirectToRoute('app_login');
+        }
+        return $this->renderForm('restaurateur/nouveaurestaurant.html.twig', [
+            'form' => $form,
         ]);
     }
 }
