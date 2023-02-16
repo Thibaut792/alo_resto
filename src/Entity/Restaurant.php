@@ -59,6 +59,11 @@ class Restaurant
         $this->livraisons = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->id .'-' . $this->getNom();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
