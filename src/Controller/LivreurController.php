@@ -14,29 +14,29 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
- * @IsGranted("IS_AUTHENTICATED_FULLY")
+ * 
  *
  */
 class LivreurController extends AbstractController
 {
     /**
      * @Route("/choixVehicule/{id}", name="app_choixVehicule")
-     * @IsGranted("ROLE_Livreur")
+     * 
      */
     public function choixVehicule($id, UserRepository $userRepository, ManagerRegistry $doctrine, Request $request): Response
     {
-        $typeVehicule = new User();
-        $idUser = $userRepository->find($id);
-        $form = $this->createForm(ChoixVehiculeType::class, $typeVehicule);
+        $choixVehicule = new Typevehicule();
+        $User = $userRepository->find($id);
+        $form = $this->createForm(ChoixVehiculeType::class, $User);
 
         $manager = $doctrine->getManager();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $typeVehicule = $form->getData();
+            $User = $form->getData();
             //$typeVehicule->setUser($this->getUser());
-            $typeVehicule->setFkTypeVehicule($idUser);
-            $manager->persist($typeVehicule);
+            // $User->setFkTypeVehicule($form->get('fk_type_vehicule')->getData());
+            $manager->persist($User);
             $manager->flush();
             return $this->redirectToRoute('app_login');
         }

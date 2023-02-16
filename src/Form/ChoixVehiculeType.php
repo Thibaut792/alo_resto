@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Typevehicule;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
