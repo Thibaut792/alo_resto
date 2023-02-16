@@ -62,8 +62,9 @@ class Restaurant
 
     public function __toString()
     {
-        return $this->id . '-' . $this->getNom();
+        return $this->id .'-' . $this->getNom();
     }
+    
     public function getId(): ?int
     {
         return $this->id;
