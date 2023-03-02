@@ -17,8 +17,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Livraison;
+use App\Entity\Plat;
 use App\Entity\Restaurant;
 use App\Form\LivraisonType;
+use App\Form\NouveauPlatType;
 use App\Form\NouveauRestaurantType;
 use Symfony\Component\DomCrawler\Form;
 
@@ -31,7 +33,7 @@ class RestaurateurController extends AbstractController
      */
     public function index(RestaurantRepository $RestaurantRepository, PlatRepository $PlatRepository, TypeplatRepository $typeplatRepository, UserRepository $userRepository): Response
     {
-        $restaurateurs = $RestaurantRepository->findAll();
+        $restaurateurs = $RestaurantRepository->findBy(['fk_user' => $this->getUser()]);
         $user = $userRepository->findAll();
         $plat = $PlatRepository->findAll();
         return $this->render('restaurateur/index.html.twig', [
@@ -106,9 +108,34 @@ class RestaurateurController extends AbstractController
             $restaurant->setFkUser($user);
             $manager->persist($restaurant);
             $manager->flush();
-            return $this->redirectToRoute('app_login');
+            return $this->redirectToRoute('app_addplat');
         }
         return $this->renderForm('restaurateur/nouveaurestaurant.html.twig', [
+            'form' => $form,
+        ]);
+    }
+
+
+    /**
+     * @Route("/ajouterPlat/{id}", name="app_addplat")
+     */
+    public function ajouterPlat($id, RestaurantRepository $restaurantRepository, UserRepository $userRepository, ManagerRegistry $doctrine, Request $request): Response
+    {
+        $plat = new Plat();
+        $restaurant = $restaurantRepository->find($id);
+        $form = $this->createForm(NouveauPlatType::class, $plat);
+
+        $manager = $doctrine->getManager();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $restaurant = $form->getData();
+            $plat->addRestaurant($restaurant);
+            $manager->persist($plat);
+            $manager->flush();
+            return $this->redirectToRoute('app_login');
+        }
+        return $this->renderForm('restaurateur/nouveauPlat.html.twig', [
             'form' => $form,
         ]);
     }

@@ -8,6 +8,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,7 +17,15 @@ class LivraisonType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('date')
+            ->add('date', DateTimeType::class, [
+                'attr' => ['class' => Livraison::class],
+                'label' => 'date',
+                'date_widget' => 'choice',
+                'years' => range(date('Y'), date('Y') + 100),
+                'months' => range(date('m'), 12),
+                'days' => range(date('d'), 31),
+                'data' => new \DateTime()
+            ])
             ->add('secteur')
             ->add('quantite', NumberType::class, ['mapped' => false])
             ->add('plat', EntityType::class, ['class' => Plat::class, 'mapped' => false])

@@ -9,6 +9,7 @@ use App\Form\LivraisonType;
 use App\Repository\LivraisonRepository;
 use App\Repository\PlatRepository;
 use App\Repository\RestaurantRepository;
+use App\Repository\SuivieDeCommandeRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,12 +26,13 @@ class CommandeController extends AbstractController
     /**
      * @Route("/passerCommande/{id}", name="app_passerCommande")
      */
-    public function passerCommande($id, PlatRepository $platRepository, RestaurantRepository $restaurantRepository, ManagerRegistry $doctrine, Request $request): Response
+    public function passerCommande($id, SuivieDeCommandeRepository $suivieDeCommandeRepository, PlatRepository $platRepository, RestaurantRepository $restaurantRepository, ManagerRegistry $doctrine, Request $request): Response
     {
         $livraison = new Livraison();
         // $restaurant = new Restaurant();
         $idRestaurant = $restaurantRepository->find($id);
         $form = $this->createForm(LivraisonType::class, $livraison);
+        $idEnAttente = $suivieDeCommandeRepository->find(5);
 
         $manager = $doctrine->getManager();
         $form->handleRequest($request);
@@ -38,7 +40,9 @@ class CommandeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $livraison = $form->getData();
             $livraison->setFkUser($this->getUser());
+            // $livraison->setfksuivicommande();
             $livraison->setFkRestaurant($idRestaurant);
+            $livraison->setFkSuiviCommande($idEnAttente);
             $platcmd = new PlatsCommander();
             $platcmd->setFkPlats($form->get('plat')->getData());
             $platcmd->setQuantite($form->get('quantite')->getData());

@@ -7,6 +7,7 @@ use App\Repository\PlatRepository;
 use App\Repository\RestaurantRepository;
 use App\Repository\SecteurlivraisonRepository;
 use App\Repository\TypeplatRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -32,11 +33,13 @@ class ClientController extends AbstractController
     /**
      * @Route("/Mescommande", name="app_commande")
      */
-    public function commande(LivraisonRepository $livraisonRepository, RestaurantRepository $restaurantRepository, PlatRepository $platRepository): Response
+    public function commande(UserRepository $userRepository, LivraisonRepository $livraisonRepository, RestaurantRepository $restaurantRepository, PlatRepository $platRepository): Response
     {
-        $commande = $livraisonRepository->findAll();
+        //$rdvs = $RdvRepository->findby(['user' => $this->getUser()], ['creneau' => 'DESC']);
+        $commande = $livraisonRepository->findBy(['fk_user' => $this->getUser()]);
         $restaurant = $restaurantRepository->findAll();
         $plat = $platRepository->findAll();
+
         return $this->render('client/commande.html.twig', [
             'commandes' => $commande,
             'restaurants' => $restaurant,
