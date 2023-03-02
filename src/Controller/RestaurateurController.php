@@ -108,7 +108,7 @@ class RestaurateurController extends AbstractController
             $restaurant->setFkUser($user);
             $manager->persist($restaurant);
             $manager->flush();
-            return $this->redirectToRoute('app_addplat');
+            return $this->redirectToRoute('app_addplat', ['id' => $restaurant->getId()]);
         }
         return $this->renderForm('restaurateur/nouveaurestaurant.html.twig', [
             'form' => $form,
@@ -129,7 +129,7 @@ class RestaurateurController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $restaurant = $form->getData();
+            $plat = $form->getData();
             $plat->addRestaurant($restaurant);
             $manager->persist($plat);
             $manager->flush();
